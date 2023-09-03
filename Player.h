@@ -37,8 +37,8 @@ public:
 		if (IsKeyDown(KEY_S)) {
 			y += 2.f + (2.f * deltaTime);
 		}
-		x = std::clamp<int>(x, bounds.xmin + r, bounds.xmax - r);
-		y = std::clamp<int>(y, bounds.ymin + r, bounds.ymax - r);
+		x = std::clamp<float>(x, bounds.xmin + r, bounds.xmax - r);
+		y = std::clamp<float>(y, bounds.ymin + r, bounds.ymax - r);
 	}
 
 	float x, y, r;

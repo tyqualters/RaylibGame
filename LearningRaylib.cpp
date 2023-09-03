@@ -10,7 +10,7 @@
 using namespace std;
 
 std::string VecToStr(Vector2 v2) {
-	return std::format("\({}, {}\)", v2.x, v2.y);
+	return std::format("({}, {})", v2.x, v2.y);
 }
 
 int main()
@@ -27,7 +27,7 @@ int main()
 	Player mainPlayer(30, 30, 25, gameBounds);
 	CollidableBlock block(100, 100, 30);
 	
-	std::vector<const CollidableBlock&> blocks{ block };
+	//std::vector<const CollidableBlock&> blocks{ block };
 
 	while (!WindowShouldClose()) {
 		// Frame specific variables
