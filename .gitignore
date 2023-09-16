@@ -367,6 +367,7 @@ FodyWeavers.xsd
 
 # Vcpkg
 vcpkg_installed/
+./vcpkg.json
 
 # Output Dir
 out/
