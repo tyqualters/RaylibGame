@@ -16,6 +16,7 @@ find_package(raylib CONFIG REQUIRED)
 file(GLOB SOURCE_FILES src/*)
 
 # Add source to this project's executable.
+# VisualStudio HATES this lol
 add_executable (LearningRaylib ${SOURCE_FILES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

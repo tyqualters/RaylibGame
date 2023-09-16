@@ -47,7 +47,7 @@ public:
     }
 
 private:
-    float deltaTime;
-    Vector2 mousePos;
+    float deltaTime = 0.f;
+    Vector2 mousePos{ 0.f, 0.f };
     std::function<void(void)> m_game_loop;
 };
