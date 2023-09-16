@@ -18,7 +18,7 @@ void ApplyGravity(T&) = delete;
 int main(void) {
     constexpr int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
 
-    Player mainPlayer(50, 50, 60, "../../../assets/bugs.png");
+    Player mainPlayer(50, 50, 60, "assets/bugs.png");
     
     Game(WINDOW_WIDTH, WINDOW_HEIGHT)
     .set_game_loop([&](){

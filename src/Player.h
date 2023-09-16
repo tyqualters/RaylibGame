@@ -33,10 +33,10 @@ public:
         y = y0;
         h = w = w0;
 
-        //Image image = LoadImage(playerTexture);
+        Image image = LoadImage(playerTexture);
         //ImageResize(&image, w, h);
         //texture = LoadTextureFromImage(image);
-        //UnloadImage(image);
+        UnloadImage(image);
     }
 
     ~Player() {

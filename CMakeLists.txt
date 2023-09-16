@@ -11,9 +11,19 @@ endif()
 
 project ("LearningRaylib")
 
+if ( NOT CMAKE_BUILD_TYPE )
+    message( "Build Type not set, defaulting to Debug..." )
+    set( CMAKE_BUILD_TYPE Debug )
+endif()
+
 find_package(raylib CONFIG REQUIRED)
 
 file(GLOB SOURCE_FILES src/*)
+
+if (CMAKE_BUILD_TYPE EQUAL Debug)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    message("Using project directory as current working directory.")
+endif()
 
 # Add source to this project's executable.
 # VisualStudio HATES this lol
