@@ -17,10 +17,13 @@ void ApplyGravity(T&) = delete;
 
 int main(void) {
     constexpr int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
-
-    Player mainPlayer(50, 50, 60, "assets/bugs.png");
     
+    Player mainPlayer(50, 50, 60, "assets/bugs.png");
+
     Game(WINDOW_WIDTH, WINDOW_HEIGHT)
+    // Load GL-dependant parts of game objects
+    .add_loadable(mainPlayer)
+    // Game loop
     .set_game_loop([&](){
         mainPlayer.draw();
         mainPlayer.controller(WINDOW_WIDTH, WINDOW_HEIGHT, 8.f);

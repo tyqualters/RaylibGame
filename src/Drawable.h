@@ -18,7 +18,7 @@ public:
         IRenderable::RenderSet.erase(this->m_uuid);
     }
 
-    virtual void draw() = 0;
+    virtual void draw() const = 0;
 
     static std::unordered_map<uint32_t, IRenderable*> RenderSet;
 
@@ -30,6 +30,10 @@ public:
         uint32_t result = dist(mt);
         if(IRenderable::RenderSet.contains(result)) return IRenderable::GenerateUUID();
         else return result;
+    }
+
+    uint32_t getUUID() const {
+        return this->m_uuid;
     }
 
 protected:

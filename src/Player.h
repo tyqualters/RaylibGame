@@ -2,6 +2,9 @@
 
 #include <raylib.h>
 
+#include "GameLoadable.h"
+#include "Drawable.h"
+
 void ClampV2(Vector2& v2, Vector2 v2min, Vector2 v2max) {
     v2.x = (v2.x < v2min.x) ? v2min.x : (v2.x > v2max.x) ? v2max.x : v2.x;
     v2.y = (v2.y < v2min.y) ? v2min.y : (v2.y > v2max.y) ? v2max.y : v2.y;
@@ -26,21 +29,23 @@ int RoundFloat(float x) {
     return (x - static_cast<int>(x)) >= 0.5f ? static_cast<int>(x) + 1 : static_cast<int>(x);
 }
 
-class Player {
+class Player : public IGameLoadable, public IRenderable {
 public:
-    Player(float x0, float y0, float w0, const char* playerTexture) {
+    Player(float x0, float y0, float w0, const char* playerTexture) : texturePath(playerTexture) {
         x = x0;
         y = y0;
         h = w = w0;
-
-        Image image = LoadImage(playerTexture);
-        //ImageResize(&image, w, h);
-        //texture = LoadTextureFromImage(image);
-        UnloadImage(image);
     }
 
     ~Player() {
-        //UnloadTexture(texture);
+        UnloadTexture(texture);
+    }
+
+    void load() override {
+        Image image = LoadImage(texturePath);
+        ImageResize(&image, RoundFloat(w), RoundFloat(h));
+        texture = LoadTextureFromImage(image);
+        UnloadImage(image);
     }
 
     Vector2 getPosition() const {
@@ -48,7 +53,7 @@ public:
     }
 
     // Note: Not really a radius for a square but w/e
-    float getRadius() {
+    float getRadius() const {
         return w / 2.f;
     }
 
@@ -57,12 +62,13 @@ public:
         y = newPos.y;
     }
 
-    void draw() {
+    void draw() const override {
         float radius = getRadius();
         // DrawCircle(x, y, radius, RED);
         // Rectangle and Circle do not have the same origin points
         // Rectangle origin point is Top-Left, Circle origin point is Center point
         // By subtracting getRadius() we are essentially forcing the origin point to the Center point
+        
         
         // Rectangle prefers ints over floats
         DrawRectangle(
@@ -71,8 +77,8 @@ public:
             RoundFloat(w),
             RoundFloat(h), 
             RED
-        );
-        //DrawTexture(texture, RoundFloat(x), RoundFloat(y), Color{ 0, 0, 0, 0 });
+        ); 
+        DrawTexture(texture, RoundFloat(x - radius), RoundFloat(y - radius), RED);
     }
 
     void controller(int winWidth, int winHeight, float speed) {
@@ -92,4 +98,5 @@ public:
 private:
     float x = 0.f, y = 0.f, w = 0.f, h = 0.f;
     Texture2D texture{};
+    const char* texturePath;
 };

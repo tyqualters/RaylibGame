@@ -6,6 +6,8 @@
 
 #include "Drawable.h"
 
+#include "GameLoadable.h"
+
 typedef std::function<void(void)> GAME_LOOP_FN;
 
 class Game {
@@ -21,6 +23,11 @@ public:
 
     Game& set_game_loop(GAME_LOOP_FN fn) {
         this->m_game_loop = fn;
+        return *this;
+    }
+
+    Game& add_loadable(IGameLoadable& loadable) {
+        loadable.load();
         return *this;
     }
 
