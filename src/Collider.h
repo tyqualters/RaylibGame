@@ -1,62 +1,48 @@
 #pragma once
 
-#include <cstdio>
-#include <cmath>
-#include <raymath.h>
+#include "Common.h"
+
+struct Point {
+	int x, y;
+};
+
+// Collider Steps:
+//	1. Iterate thru ea. Collider
+//	2. Check if 1 point contact or 2-point (line) contact
+//	3. If 1 point contact, calculate Torques
+//	4. If 2-point (line) contact, calculate Pressure
+//	5. Apply external accelerations and internal decceleration
+//	6. Iterate thru ea. Collider
+//	7. Check if 1 point contact or 2-point (line) contact
+//	8. If one exists, restart UNLESS it is non-prevailing.
+//  9. If not, end and allow game to update graphics
 
 class Collider {
 public:
-	Collider() = delete;
-	/**
-	  * point1: top left of rectangle
-	  * point2: bottom right of rectangle
-	  */
-	Collider(Vector2 point, Vector2 dimensions) : point(point), dimensions(dimensions) {}
+	Collider() = default;
 
-	inline bool is_colliding(const Collider& collider2) {
-		return std::max(point.x, collider2.point.x) < std::min(point.x + dimensions.x, collider2.point.x + collider2.dimensions.x)
-			&& std::max(point.y, collider2.point.y) < std::min(point.y + dimensions.y, collider2.point.y + collider2.dimensions.y);
+	// Get the angle in degrees (0 to 360)
+	float getAngle() {
+		float degrees = (angle * 180.f) / static_cast<float>(std::numbers::pi);
+		// Don't want to clamp 361 degrees to 360 lol
+		while (degrees - 360.f >= 0.f) degrees -= 360.f;
+		return degrees;
 	}
 
-	void add_force(Vector2 direction, float magnitude) {
-		velocity = { velocity.x + direction.x, velocity.y + direction.y, velocity.z + magnitude };
-		//printf("Added force (%f, %f, %f)\n", direction.x, direction.y, magnitude);
-	}
-
-	void negate_force(float magnitude) {
-		velocity.z -= magnitude;
-		if (velocity.z < 0) {
-			velocity = { 0,0,0 };
-		}
-	}
-
-	void apply_movement(Collider& collider2) {
-
-		Collider simCollider({ point.x + velocity.x * velocity.z, point.y + velocity.y * velocity.z }, dimensions);
-		if (simCollider.is_colliding(collider2)) {
-			// velocity = (1 * v0 + 1 * v1) / 2
+	auto static ProcessCollisions(std::vector<Collider&> colliders) {
+		for (auto& collider : colliders) {
 			
-			float v0 = velocity.z, v1 = collider2.velocity.z;
+		}
+	}
 
-			collider2.velocity.x += velocity.x;
-			collider2.velocity.y += velocity.y;
-			collider2.velocity.z = (v0 + v1) / 2;
-			// handle momentum
-			velocity.x = -velocity.x;
-			velocity.y = -velocity.y;
-			velocity.z = (v0 + v1) / 2;
-			apply_movement(collider2);
-		}
-		else {
-			point.x += velocity.x * velocity.z;
-			point.y += velocity.y * velocity.z;
-			collider2.point.x += collider2.velocity.x * collider2.velocity.z;
-			collider2.point.y += collider2.velocity.y * collider2.velocity.z;
-			//printf("Moved by (%f, %f)\n", velocity.x * velocity.z, velocity.y * velocity.z);
-		}
+	auto static CalculateForce(uint32_t m, float a) {
+		return static_cast<float>(static_cast<float>(m) * a);
 	}
 
 protected:
-	Vector2 point, dimensions;
-	Vector3 velocity = { 0,0,0 };
+
+	uint32_t mass{};
+	float acceleration;
+	float velocity;
+	float angle;
 };

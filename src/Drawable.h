@@ -1,11 +1,10 @@
 #pragma once
 
-#include <cstdint>
+#include "Common.h"
+
 #include <random>
 #include <ctime>
 #include <unordered_map>
-
-#include <raylib.h>
 
 class IRenderable {
 public:

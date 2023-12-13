@@ -1,12 +1,10 @@
 #pragma once
 
-#include <functional>
-
-#include <raylib.h>
-
+#include "Common.h"
 #include "Drawable.h"
-
 #include "GameLoadable.h"
+
+#include <functional>
 
 typedef std::function<void(void)> GAME_LOOP_FN;
 

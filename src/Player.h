@@ -1,7 +1,6 @@
 #pragma once
 
-#include <raylib.h>
-
+#include "Common.h"
 #include "GameLoadable.h"
 #include "Drawable.h"
 
@@ -36,6 +35,18 @@ public:
         y = y0;
         h = w = w0;
     }
+
+    /*
+    This is a quick-fix example of being able to identify arguments you are passing.
+
+    I.E. Player({.x0 = 15, .y0 = 16, .w0 = 17, .playerTexture = "teehee.png"});
+
+    struct PlayerParams {
+        float x0, y0, w0;
+        const char* playerTexture;
+    };
+
+    explicit Player(struct PlayerParams&& i) : Player(i.x0, i.y0, i.w0, i.playerTexture) {}*/
 
     ~Player() {
         UnloadTexture(texture);

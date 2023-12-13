@@ -19,7 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Add source to this project's executable.
 # VisualStudio HATES this lol
-add_executable (LearningRaylib ${SOURCE_FILES} "src/Collider.h")
+add_executable (LearningRaylib ${SOURCE_FILES} "src/Collider.h" "src/Common.h")
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
